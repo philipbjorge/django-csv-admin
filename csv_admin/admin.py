@@ -104,6 +104,10 @@ class CsvFileAdmin(admin.ModelAdmin):
             invalid_rows = []
             reader = csv.DictReader(instance.csv)
             for row in reader:
+                # ROW MODIFICATION HOOK
+                for func in settings.CSV_ADMIN_ROW_FUNCTIONS:
+                    func(row)
+
                 form_instance = form_class(row)
                 if form_instance.is_valid():
                     # Ignore valid forms for now.
