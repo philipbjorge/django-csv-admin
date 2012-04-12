@@ -102,7 +102,8 @@ class CsvFileAdmin(admin.ModelAdmin):
         if valid_rows is None or invalid_rows is None:
             valid_rows = []
             invalid_rows = []
-            reader = csv.DictReader(instance.csv)
+            f_csv = open(instance.csv.path, 'rU')
+            reader = csv.DictReader(f_csv)
             for row in reader:
                 form_instance = form_class(row)
                 if form_instance.is_valid():
@@ -120,6 +121,7 @@ class CsvFileAdmin(admin.ModelAdmin):
                 # Save forms into cache to speed up load time during validation.
                 cache.set(valid_forms_cache_key, valid_rows)
                 cache.set(invalid_forms_cache_key, invalid_rows)
+            f_csv.close()
 
         invalid_row_count = len(invalid_rows)
         row_count = len(valid_rows) + invalid_row_count
