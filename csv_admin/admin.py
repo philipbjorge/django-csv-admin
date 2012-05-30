@@ -102,7 +102,8 @@ class CsvFileAdmin(admin.ModelAdmin):
         if valid_rows is None or invalid_rows is None:
             valid_rows = []
             invalid_rows = []
-            reader = csv.DictReader(instance.csv)
+            f_csv = open(instance.csv.path, 'rU')
+            reader = csv.DictReader(f_csv)
             for row in reader:
                 # ROW MODIFICATION HOOK
                 for func in settings.CSV_ADMIN_ROW_FUNCTIONS:
@@ -118,6 +119,7 @@ class CsvFileAdmin(admin.ModelAdmin):
                 if len(invalid_rows) + 1 > self.MAX_INVALID_FORMS:
                     too_many_rows = True
                     break
+            f_csv.close()
 
             # Only cache when we haven't loaded too many invalid rows.
             if not too_many_rows:
