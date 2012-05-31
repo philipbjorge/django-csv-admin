@@ -1,4 +1,5 @@
 import csv
+import os
 import datetime
 
 from django.conf import settings
@@ -105,9 +106,8 @@ class CsvFileAdmin(admin.ModelAdmin):
             f_csv = open(instance.csv.path, 'rU')
             reader = csv.DictReader(f_csv)
             for row in reader:
-                # ROW MODIFICATION HOOK
-                for func in settings.CSV_ADMIN_ROW_FUNCTIONS:
-                    func(row)
+                # PNWMoths - Adding csv tag
+                row['csv_file'] = os.path.basename(instance.csv.file.name)
 
                 form_instance = form_class(row)
                 if form_instance.is_valid():

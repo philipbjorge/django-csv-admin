@@ -1,3 +1,8 @@
+PNWMoths Modifications
+======================
+This fork has gained some specific modifications for the PNWMoths application.
+Specifically, a csv_file column is populated with the current filename.
+
 Django CSV admin
 ================
 
