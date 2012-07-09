@@ -1,7 +1,10 @@
 PNWMoths Modifications
 ======================
 This fork has gained some specific modifications for the PNWMoths application.
-Specifically, a csv_file column is populated with the current filename.
+
+A csv_file column is populated with the current filename.
+Elevation field is converted to ft if an elevation_units column is present
+that contains "m".
 
 Django CSV admin
 ================

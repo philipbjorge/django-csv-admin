@@ -109,6 +109,13 @@ class CsvFileAdmin(admin.ModelAdmin):
                 # PNWMoths - Adding csv tag
                 row['csv_file'] = os.path.basename(instance.csv.file.name)
 
+                # Converting elevation here due to form validation stuff in django
+                if row.get("elevation_units"):
+                    if "m" in row["elevation_units"].lower():
+                        row["elevation"] = int(row["elevation"])
+                        row["elevation"] *= 3.2808399
+                        row["elevation"] = str(int(row["elevation"]))
+
                 form_instance = form_class(row)
                 if form_instance.is_valid():
                     # Ignore valid forms for now.
